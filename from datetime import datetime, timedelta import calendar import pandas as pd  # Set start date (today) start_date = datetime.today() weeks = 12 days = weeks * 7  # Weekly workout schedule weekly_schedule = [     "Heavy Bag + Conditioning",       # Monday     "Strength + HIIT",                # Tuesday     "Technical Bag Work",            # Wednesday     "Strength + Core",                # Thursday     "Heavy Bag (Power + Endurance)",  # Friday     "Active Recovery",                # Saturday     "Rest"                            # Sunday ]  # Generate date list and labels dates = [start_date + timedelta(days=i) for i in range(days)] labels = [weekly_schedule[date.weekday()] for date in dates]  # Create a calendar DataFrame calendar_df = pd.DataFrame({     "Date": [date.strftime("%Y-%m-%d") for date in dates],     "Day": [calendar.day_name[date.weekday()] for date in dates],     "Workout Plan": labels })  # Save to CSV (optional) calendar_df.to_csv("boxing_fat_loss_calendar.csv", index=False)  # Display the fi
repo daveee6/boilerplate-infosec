@@ -1,0 +1,36 @@
+from datetime import datetime, timedelta
+import calendar
+import pandas as pd
+
+# Set start date (today)
+start_date = datetime.today()
+weeks = 12
+days = weeks * 7
+
+# Weekly workout schedule
+weekly_schedule = [
+    "Heavy Bag + Conditioning",       # Monday
+    "Strength + HIIT",                # Tuesday
+    "Technical Bag Work",            # Wednesday
+    "Strength + Core",                # Thursday
+    "Heavy Bag (Power + Endurance)",  # Friday
+    "Active Recovery",                # Saturday
+    "Rest"                            # Sunday
+]
+
+# Generate date list and labels
+dates = [start_date + timedelta(days=i) for i in range(days)]
+labels = [weekly_schedule[date.weekday()] for date in dates]
+
+# Create a calendar DataFrame
+calendar_df = pd.DataFrame({
+    "Date": [date.strftime("%Y-%m-%d") for date in dates],
+    "Day": [calendar.day_name[date.weekday()] for date in dates],
+    "Workout Plan": labels
+})
+
+# Save to CSV (optional)
+calendar_df.to_csv("boxing_fat_loss_calendar.csv", index=False)
+
+# Display the first two weeks
+print(calendar_df.head(14))
